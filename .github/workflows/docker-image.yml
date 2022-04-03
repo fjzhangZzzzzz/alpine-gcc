@@ -25,6 +25,7 @@ jobs:
       
     - name: Set up buildx
       uses: docker/setup-buildx-action@v1
+      id: buildx
 
     - name: Extract metadata for Docker
       uses: docker/metadata-action@v3
@@ -43,7 +44,7 @@ jobs:
       with:
         context: .
         push: true
-        platforms: linux/amd64,linux/arm64
+        platforms: ${{ steps.buildx.outputs.platforms }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
     
